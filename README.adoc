@@ -34,8 +34,12 @@ pluginManagement {
             val githubUrl: String by settings
 
             name = "github"
-            url = uri("$githubUrl/*")
-            credentials(PasswordCredentials::class)
+            credentials {
+                password = project.findProperty("githubPassword") as String? ?: System.getenv("REPOSITORY_PASSWORD")
+                username = project.findProperty("githubUsername") as String? ?: System.getenv("REPOSITORY_USERNAME")
+            }
+
+            url = uri("${project.findProperty("githubUrl") ?: System.getenv("REPOSITORY_URL")}/*")
         }
     }
     ...

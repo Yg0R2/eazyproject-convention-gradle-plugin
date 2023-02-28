@@ -28,11 +28,11 @@ configure<PublishingExtension> {
                 name = "github"
 
                 credentials {
-                    password = "${project.properties["githubPassword"]!!}"
-                    username = "${project.properties["githubUsername"]!!}"
+                    password = project.findProperty("githubPassword") as String? ?: System.getenv("REPOSITORY_PASSWORD")
+                    username = project.findProperty("githubUsername") as String? ?: System.getenv("REPOSITORY_USERNAME")
                 }
 
-                url = uri("${project.properties["githubUrl"]!!}/${project.rootProject.name}")
+                url = uri("${project.findProperty("githubUrl") ?: System.getenv("REPOSITORY_URL")}/${project.rootProject.name}")
             }
         }
     }

@@ -1,4 +1,5 @@
 import org.eazyportal.plugin.convention.extension.getJavaVersion
+import org.gradle.internal.impldep.org.jsoup.safety.Safelist
 
 plugins {
     id("jacoco")
@@ -22,11 +23,11 @@ repositories {
         name = "github"
 
         credentials {
-            password = "${project.properties["githubPassword"]!!}"
-            username = "${project.properties["githubUsername"]!!}"
+            password = project.findProperty("githubPassword") as String? ?: System.getenv("REPOSITORY_PASSWORD")
+            username = project.findProperty("githubUsername") as String? ?: System.getenv("REPOSITORY_USERNAME")
         }
 
-        url = uri("${project.properties["githubUrl"]!!}/*")
+        url = uri("${project.findProperty("githubUrl") ?: System.getenv("REPOSITORY_URL")}/*")
     }
 
     mavenLocal()
