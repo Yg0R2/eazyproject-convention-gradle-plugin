@@ -13,6 +13,8 @@ configure<PublishingExtension> {
         }
 
         withType<MavenPublication> {
+            suppressAllPomMetadataWarnings()
+
             versionMapping {
                 allVariants {
                     fromResolutionResult()
